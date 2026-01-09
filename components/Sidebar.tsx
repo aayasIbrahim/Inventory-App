@@ -1,13 +1,17 @@
+"use client"
 import React from "react";
 import { BarChart3, Package, Plus, Settings } from "lucide-react";
 import Link from "next/link";
 import { UserButton } from "@stackframe/stack";
+import { usePathname } from "next/navigation";
 
-function Sidebar({ currentPath = "/dashboard" }: { currentPath: string }) {
+
+function Sidebar() {
+ const pathname = usePathname();
   const navigation = [
     { name: "Dashboard", href: "/dashboard", icon: BarChart3 },
     { name: "Inventory", href: "/dashboard/inventory", icon: Package },
-    { name: "Add Product", href: "/dashboard//add-product", icon: Plus },
+    { name: "Add Product", href: "/dashboard/add-product", icon: Plus },
     { name: "Settings", href: "/dashboard/settings", icon: Settings },
   ];
   return (
@@ -24,8 +28,9 @@ function Sidebar({ currentPath = "/dashboard" }: { currentPath: string }) {
           Iventory
         </div>
         {navigation.map((item, key) => {
+
           const IconComponent = item.icon;
-          const isActive = currentPath === item.href;
+          const isActive = pathname === item.href;
           return (
             <Link
               href={item.href}
