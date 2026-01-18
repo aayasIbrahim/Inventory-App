@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from "../app/generated/prisma/client";
+import { PrismaClient} from "../app/generated/prisma/client";
 import { PrismaPg } from '@prisma/adapter-pg'
 import 'dotenv/config'
 
@@ -11,17 +11,11 @@ const prisma = new PrismaClient({
 });
 
 async function main() {
-  const demoUserId = "b2070ec2-d504-4d9d-aed1-1fea3fb9b762";
+  const demoUserId = "8b86851f-3ea9-44b2-aff7-50782d1bc927";
+  
 
-  // ===============================
-  // 1️⃣ আগের সব ডাটা মুছে ফেলা
-  // ===============================
-  await prisma.product.deleteMany({});
-  console.log("All previous products deleted!");
 
-  // ===============================
-  // 2️⃣ নতুন 25 টা প্রোডাক্ট create করা
-  // ===============================
+  
   await prisma.product.createMany({
     data: Array.from({ length: 25 }).map((_, i) => ({
       userId: demoUserId,
@@ -33,8 +27,8 @@ async function main() {
     })),
   });
 
-  console.log("Seed data created successfully!");
-  console.log(`Created 25 products for user ID: ${demoUserId}`);
+  console.log("Seed data delete successfully!");
+
 }
 
 main()
