@@ -43,7 +43,7 @@ async function inventory({
 
       <div className="space-y-6">
         <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <form className="flex gap-2" action="/inventory" method="GET">
+          <form className="flex gap-2" action="/dashboard/inventory" method="GET">
             <input
               name="q"
               placeholder="Search products..."
