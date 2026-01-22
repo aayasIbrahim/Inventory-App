@@ -2,31 +2,37 @@ import React from "react";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth";
 import { deleteProduct } from "@/lib/actions/product";
+import Pagination from "@/components/Pagination";
 
 async function inventory({
   searchParams,
 }: {
   searchParams: Promise<{ q?: string; page?: string }>;
 }) {
-  //   const [totalCount, items] = await Promise.all([
-  //   prisma.product.count({ where }),
-  //   prisma.product.findMany({
-  //     where,
-  //     orderBy: { createdAt: "desc" },
-  //     skip: (page - 1) * pageSize,
-  //     take: pageSize,
-  //   }),
-  // ]);
   const user = await getCurrentUser();
   const userId = user.id;
-  const params= await searchParams
-    const q = (params.q ?? "").trim();
-  const product = await prisma.product.findMany({
-    where: {
-      userId,
-     name:{contains:q,mode:"insensitive"}
-    },
-  });
+
+  const params = await searchParams;
+  const q = (params.q ?? "").trim();
+  const page = Math.max(1, Number(params.page ?? 1));
+  const pageSize = 5;
+
+  const where = {
+    userId,
+    ...(q ? { name: { contains: q, mode: "insensitive" as const } } : {}),
+  };
+
+  const [totalCount, items] = await Promise.all([
+    prisma.product.count({ where }),
+    prisma.product.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    }),
+  ]);
+
+  const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
 
   return (
     <>
@@ -43,7 +49,11 @@ async function inventory({
 
       <div className="space-y-6">
         <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <form className="flex gap-2" action="/dashboard/inventory" method="GET">
+          <form
+            className="flex gap-2"
+            action="/dashboard/inventory"
+            method="GET"
+          >
             <input
               name="q"
               placeholder="Search products..."
@@ -82,7 +92,7 @@ async function inventory({
             </thead>
 
             <tbody className="bg-white divide-y divide-gray-200">
-              {product.map((product, key) => (
+              {items.map((product, key) => (
                 <tr key={key} className="hover:bg-gray-50">
                   <td className="px-6 py-4 text-sm text-gray-500">
                     {product.name}
@@ -117,6 +127,19 @@ async function inventory({
             </tbody>
           </table>
         </div>
+        {totalPages > 1 && (
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              baseUrl="/dashboard/inventory"
+              searchParams={{
+                q,
+                pageSize: String(pageSize),
+              }}
+            />
+          </div>
+        )}
       </div>
     </>
   );
