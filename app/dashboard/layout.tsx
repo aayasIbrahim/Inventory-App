@@ -30,7 +30,7 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
             <Menu className="w-6 h-6" />
           </button>
           <span className="font-semibold text-gray-800 text-lg text-white">Inventory App</span>
-          <div /> {/* empty space for alignment */}
+          <div />
         </div>
 
         <main className="flex-1 md:ml-64 p-4 transition-all duration-300">
