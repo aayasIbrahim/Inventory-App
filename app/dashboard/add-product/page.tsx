@@ -1,5 +1,6 @@
 import { createProduct } from "@/lib/actions/product";
 import Link from "next/link";
+export const dynamic = "force-dynamic";
 
 export default async function AddProductPage() {
   return (
