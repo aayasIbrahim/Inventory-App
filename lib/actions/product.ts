@@ -1,5 +1,4 @@
-
-"use server"
+"use server";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "../auth";
 import { redirect } from "next/navigation";
@@ -43,10 +42,7 @@ export async function createProduct(formdata: FormData) {
       data: { ...parsed.data, userId: user.id },
     });
     redirect("/dashboard/inventory");
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
-    throw new Error("Failed to create product.");
+  } catch (error) {
+    throw error; 
   }
 }
