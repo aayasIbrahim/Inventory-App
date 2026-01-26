@@ -123,7 +123,7 @@ export default async function AddProductPage() {
                 </Link>
                 <button
                   type="submit"
-                  className="flex-1 sm:flex-none px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                  className="cursor-pointer flex-1 sm:flex-none px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
                 >
                   Add Product
                 </button>
