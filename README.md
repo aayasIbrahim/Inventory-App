@@ -5,11 +5,13 @@
 > Suitable for **GitHub showcase, client delivery & portfolio**
 
 ---
+## 🌐 About the Project
 
-## 🌐 About the Project | প্রজেক্ট সম্পর্কে
+**Inventory App** is a modern and scalable inventory management system designed to manage products, stock levels, and basic business analytics efficiently. The application focuses on clean architecture, performance, and real-world usability.
 
-**Inventory App** হলো একটি modern inventory management system যেখানে product, stock, এবং basic analytics manage করা যায়।
-This project is built with **scalable architecture** and **industry best practices**, making it ideal for **real-world use** and **portfolio presentation**.
+It is built using **Next.js 15 (App Router)** with **Server Actions**, **Prisma ORM**, and **PostgreSQL**, following industry best practices. The project is suitable for small to medium businesses, learning purposes, and as a professional portfolio or client-ready application.
+
+The goal of this project is to demonstrate practical full-stack development skills, including database design, server-side logic, and responsive user interface development.
 
 ---
 
@@ -26,7 +28,7 @@ This project is built with **scalable architecture** and **industry best practic
 
 ---
 
-## ✨ Key Features | প্রধান ফিচারসমূহ
+## ✨ Key Features
 
 * ✅ Product & Inventory Management
 * ✅ Secure PostgreSQL Database
@@ -51,14 +53,20 @@ Main packages used in this project:
 * `recharts`
 * `dotenv`
 
----
 
-## 📂 Project Setup | প্রজেক্ট সেটআপ
+# Admin Credentials
+# ===============================
+ADMIN_EMAIL="inventory@gmail.com"
+ADMIN_PASSWORD="12345678"
+
+
+
+## 📂 Project Setup 
 
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/aayasIbrahim/Inventory-App
 cd inventory-app
 ```
 
@@ -70,8 +78,4 @@ cd inventory-app
 npm install
 ```
 
----
 
-## ⚙️ Environment Variables | এনভায়রনমেন্ট ভ্যারিয়েবল
-
-Create
