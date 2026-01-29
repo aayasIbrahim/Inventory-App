@@ -11,7 +11,7 @@ interface SidebarProps {
   setIsOpen: (open: boolean) => void;
 }
 
-function Sidebar({ isOpen}: SidebarProps) {
+function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   const pathname = usePathname();
 
   // Navigation items
@@ -45,12 +45,18 @@ function Sidebar({ isOpen}: SidebarProps) {
 
           {navigation.map((item, key) => {
             const IconComponent = item.icon;
-            const isActive = pathname === item.href; // highlight active page
+            const isActive = pathname === item.href;
+            // highlight active page
 
             return (
               <Link
                 href={item.href}
                 key={key}
+                onClick={() => {
+                  if (window.innerWidth < 768) {
+                    setIsOpen(false);
+                  }
+                }}
                 className={`
                   flex items-center space-x-3 py-2 px-3 rounded-lg
                   transition-colors duration-200
