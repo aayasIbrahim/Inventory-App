@@ -174,30 +174,39 @@ async function inventory({
                       {product.lowStockAt || "-"}
                     </td>
                     <td className="px-6 py-4 text-sm">
-                      <form
-                        action={async (formData: FormData) => {
-                          "use server";
-                          await deleteProduct(formData);
-                        }}
-                      >
-                        <input type="hidden" name="id" value={product.id} />
-                        <button className="text-red-600 hover:text-red-900 font-medium">
-                          Delete
-                        </button>
-                      </form>
-                      <Link
-                        href={`/dashboard/inventory/${product.id}`}
-                        className="text-blue-600 hover:underline mr-3"
-                      >
-                        View
-                      </Link>
+                      <ul className="flex items-center gap-4">
+                        <li>
+                          <form
+                            action={async (formData: FormData) => {
+                              "use server";
+                              await deleteProduct(formData);
+                            }}
+                          >
+                            <input type="hidden" name="id" value={product.id} />
+                            <button className="text-red-600 hover:text-red-900 font-medium">
+                              Delete
+                            </button>
+                          </form>
+                        </li>
 
-                      <Link
-                        href={`/dashboard/inventory/${product.id}/edit`}
-                        className="text-purple-600 hover:underline"
-                      >
-                        Edit
-                      </Link>
+                        <li>
+                          <Link
+                            href={`/dashboard/inventory/${product.id}`}
+                            className="text-blue-600 hover:underline font-medium"
+                          >
+                            View
+                          </Link>
+                        </li>
+
+                        <li>
+                          <Link
+                            href={`/dashboard/inventory/${product.id}/edit`}
+                            className="text-purple-600 hover:underline font-medium"
+                          >
+                            Edit
+                          </Link>
+                        </li>
+                      </ul>
                     </td>
                   </tr>
                 ))}
