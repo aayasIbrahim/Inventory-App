@@ -117,8 +117,8 @@ async function inventory({
               </Link>
 
               <Link
-                href={`/dashboard/inventory/${product.id}/edit`}
-                className="text-purple-600 hover:underline"
+                href={`/dashboard/inventory/edit/${product.id}`}
+                className="text-purple-600 hover:underline"  
               >
                 Edit
               </Link>
