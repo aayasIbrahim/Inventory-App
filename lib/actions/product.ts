@@ -22,27 +22,57 @@ const ProductSchema = z.object({
   sku: z.string().optional(),
   lowStockAt: z.coerce.number().int().min(0).optional(),
 });
-export async function createProduct(formdata: FormData) {
+
+type ActionResponse = {
+  error?: string;
+  fieldErrors?: Partial<{
+    name: string;
+    price: string;
+    quantity: string;
+    lowStockAt: string;
+    sku: string;
+    error:string;
+  }>;
+};
+
+export async function createProduct(formData: FormData): Promise<ActionResponse> {
   const user = await getCurrentUser();
 
+  if (!user) {
+    redirect("/login");
+    return { error: "Unauthorized" }; // stop execution after redirect
+  }
+
+  // Parse form data safely
   const parsed = ProductSchema.safeParse({
-    name: formdata.get("name"),
-    price: formdata.get("price"),
-    quantity: formdata.get("quantity"),
-    sku: formdata.get("sku") || undefined,
-    lowStockAt: formdata.get("lowStockAt") || undefined,
+    name: formData.get("name"),
+    price: formData.get("price"),
+    quantity: formData.get("quantity"),
+    sku: formData.get("sku") || undefined,
+    lowStockAt: formData.get("lowStockAt") || undefined,
   });
 
   if (!parsed.success) {
-    throw new Error("Validation failed");
+    const fieldErrors: ActionResponse["fieldErrors"] = {};
+    parsed.error.issues.forEach((issue) => {
+      if (issue.path[0]) fieldErrors[issue.path[0] as keyof typeof fieldErrors] = issue.message;
+    });
+
+    return {
+      error: "Invalid input",
+      fieldErrors,
+    };
   }
 
   try {
     await prisma.product.create({
       data: { ...parsed.data, userId: user.id },
     });
-    redirect("/dashboard/inventory");
-  } catch (error) {
-    throw error; 
+
+    redirect("/dashboard/inventory"); // success
+    return {}; // optional
+  } catch (err) {
+    console.error(err);
+    return { error: "Something went wrong. Please try again." };
   }
 }
