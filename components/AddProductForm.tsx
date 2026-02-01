@@ -1,20 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState ,} from "react";
 import { createProduct } from "@/lib/actions/product";
 import { useFormStatus } from "react-dom";
+import { useRouter } from "next/navigation"
+
 import Link from "next/link";
 
 export default function AddProductForm() {
+    const router= useRouter()
   const { pending } = useFormStatus();
   const [serverError, setServerError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<string, string>>>({});
 
-  async function handleSubmit(formData: FormData) {
-    const res = await createProduct(formData);
-    if (res.error) setServerError(res.error);
-    if (res.fieldErrors) setFieldErrors(res.fieldErrors);
+ async function handleSubmit(formData: FormData) {
+  const res = await createProduct(formData);
+
+  if (!res.error) {
+    router.push("/dashboard/inventory"); 
+  } else {
+    setServerError(res.error || null);
+      setFieldErrors(res.fieldErrors || {})
   }
+}
+  
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -69,8 +69,8 @@ export async function createProduct(formData: FormData): Promise<ActionResponse>
       data: { ...parsed.data, userId: user.id },
     });
 
-    redirect("/dashboard/inventory"); // success
-    return {}; // optional
+    redirect("/dashboard/inventory"); 
+   
   } catch (err) {
     console.error(err);
     return { error: "Something went wrong. Please try again." };
